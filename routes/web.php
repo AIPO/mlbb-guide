@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\GuideController;
+use App\Http\Controllers\HeroController;
+use App\Http\Controllers\HeroStatsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('heroes', [HeroController::class, 'index'])->name('heroes.index');
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::resource('heroes', HeroController::class)
+        ->except('index');
+    Route::resource('heroes.guide', GuideController::class);
 });
+
