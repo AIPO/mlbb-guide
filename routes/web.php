@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('heroes', [HeroController::class, 'index'])->name('heroes.index');
+Route::get('guide', [GuideController::class, 'index'])->name('guide.index');
 
 Auth::routes();
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('heroes', HeroController::class)
         ->except('index');
-    Route::resource('heroes.guide', GuideController::class);
+    Route::resource('heroes.guide', GuideController::class)
+    ->except('index');
+
 });
 

@@ -1,23 +1,19 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+    <div class="row">
+        <div class="col-md-8">Main</div>
+        <div class="col-md-4">
+            <div class="p-4 mb-3">
+                <h4>{{__('Newest Guides')}}</h4>
+                <ol class="list-unstyled">
+                    @foreach($newestGuides as $guide)
+                        <li>
+                            <a href="{{route('heroes.guide.show', [$guide->hero, $guide])}}">
+                                {{$guide->title}}</a>
+                        </li>
+                    @endforeach
+                </ol>
             </div>
         </div>
     </div>
-</div>
 @endsection
